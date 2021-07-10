@@ -1,0 +1,55 @@
+Using the interface:
+
+Notes about Version 6.3:
+* All buttons are functional including the image export.
+* When you run the script for the first time make sure to uncomment the #ee.Authenticate(). For subsequent runs, this canbe commented out to save time.
+* The reference file instantiates the scope of the Sentinel bands coverage. Currently this covers Spain, France, and Italy. Loads directly in backend from the "reference" geojson file.
+* Optimizations to the code and visual aesthetics pending.
+
+
+Step 1: Upload the labelled dataset
+	- Paste the table ID from the your Earth engine account console where you uploaded sigpac asset.
+
+
+Step 2: Full scope geometry
+	- Upload the geojson file "parcel" which is the outline of the sigpac geometry.
+	- This is used for defining the training points and training export image.
+	- For error checking, try uploading a zone out of the training area scope "work_zone_outscope".
+	
+Step 3: Training zone upload
+	- This step is not mandatory. Defaults to full scope if not used.
+	- If you want to check, you can upload "zone_insigpac" geojson which is a small area within the sigpac dataset which has approx 50% irrigated and non irrigated area.
+	- For error checking, try uploading a zone out of the training area scope "work_zone_outscope".
+
+Step 4: Train the model
+	- The progress bar will indicate the training progress.
+	- Usually trains in under 1 min.
+	- Can try to upload the training zone after initially testing without.
+
+Step 5: Export the taining
+	- Set the scale and click the export button.
+	- Type the filename in the popup entrybox. Example : "26_May_Urgell"
+	- Details of pixels (px) and export scale (sc) are automatically appended to filename:
+		"26_May_Urgell_train_px_20k_sc_20"
+	- Progress bar indicates progress.
+	- Takes about 6 mins for scale 30 and 13 mins for scale 5.
+	- File is stored in your google drive associated with the earth engine console authentication.
+	- Any errors are indicated with a popup message.
+
+Step 6: Prediction Zone upload
+	- Upload the "zone_pred_Occ" geojson. This is the boundary of Occitanie region.
+	- This button both uploads and classifies the prediction area in the same step.
+	- Any errors are indicated with a popup message.
+
+Step 7: Export prediction:
+	- Set the scale and click the export button.
+	- Type the filename in the popup entrybox. Example : "26_May_Occitanie"
+	- Details of pixels (px) and export scale (sc) are automatically appended to filename:
+		"26_May_Occitanie_pred_px_20k_sc_20"
+	- Progress bar indicates progress.
+	- Takes about 48 min for scale 20 Occitanie region; 9000 pixels. 1 image 
+		- 5:30 hrs for scale 5 Occitanie region; 20k pixels. 8 images.
+		- 49 mins for scale 20 Occitanie region; 20k pixels. 1 image.
+	- File is stored in your google drive associated with the earth engine console authentication.
+	- Any errors are indicated with a popup message.
+
